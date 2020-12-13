@@ -10,7 +10,7 @@ public class Main {
         userDaoHib.saveUser("Ekaterina", "Buravtseva", (byte) 24);
         userDaoHib.saveUser("Emily", "Scott", (byte) 25);
         userDaoHib.saveUser("Alex", "Miller", (byte) 31);
-        userDaoHib.saveUser("Mike", "Ivanov", (byte) 39);
+        userDaoHib.saveUser("Mike", "Ivanov", (byte) 37);
         System.out.println(userDaoHib.getAllUsers());
         userDaoHib.cleanUsersTable();
         userDaoHib.dropUsersTable();
