@@ -1,37 +1,23 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDao;
-import jm.task.core.jdbc.dao.implementation.UserDaoHibernateImpl;
-import jm.task.core.jdbc.dao.implementation.UserDaoJDBCImpl;
-
-import java.io.*;
-import java.util.Properties;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.implementation.UserServiceImpl;
 
 public class Main {
+    private static final UserService userService = new UserServiceImpl();
 
     public static void main(String[] args) {
-        Properties property = new Properties();
-        String system = null;
-        UserDao userDao = null;
-        try (FileInputStream fis = new FileInputStream("src/main/resources/config.properties")) {
-            property.load(fis);
-            system = property.getProperty("system");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (system.equals("jdbc")) {
-            userDao = new UserDaoJDBCImpl();
-        } else if (system.equals("hibernate")) {
-            userDao = new UserDaoHibernateImpl();
-        }
-        userDao.createUsersTable();
-        userDao.saveUser("Ekaterina", "Buravtseva", (byte) 24);
-        userDao.saveUser("Emily", "Scott", (byte) 25);
-        userDao.saveUser("Alex", "Miller", (byte) 31);
-        userDao.saveUser("Mike", "Ivanov", (byte) 37);
-        System.out.println(userDao.getAllUsers());
-        userDao.cleanUsersTable();
-        userDao.dropUsersTable();
+        userService.createUsersTable();
+        userService.saveUser("Ekaterina", "Buravtseva", (byte) 24);
+        userService.saveUser("Emily", "Scott", (byte) 25);
+        userService.saveUser("Alex", "Miller", (byte) 31);
+        userService.saveUser("Mike", "Ivanov", (byte) 39);
+        System.out.println(userService.getAllUsers());
+        userService.removeUserById(1);
+        System.out.println(userService.getAllUsers());
+        userService.cleanUsersTable();
+        System.out.println(userService.getAllUsers());
+        userService.dropUsersTable();
     }
 }
 

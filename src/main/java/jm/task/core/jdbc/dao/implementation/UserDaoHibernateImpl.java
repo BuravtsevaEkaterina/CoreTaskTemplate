@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.dao.implementation;
 
-import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.DAOFactory;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoHibernateImpl implements UserDao {
+public class UserDaoHibernateImpl extends DAOFactory {
     private static Transaction transaction;
     private static Session session;
 
@@ -41,15 +41,13 @@ public class UserDaoHibernateImpl implements UserDao {
         }
     }
 
-    @Override
-    public void saveUser(String name, String lastName, byte age) {
+    public void saveUser(User user) {
         try {
             session = Util.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            User user = new User(name, lastName, age);
             session.save(user);
             transaction.commit();
-            System.out.println("User с именем - " + name + " добавлен в базу данных");
+            System.out.println("User с именем - " + user.getName() + " добавлен в базу данных");
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -61,12 +59,12 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public void removeUserById(long id) {
+    public void removeUserById(User user) {
         try {
             session = Util.getSessionFactory().openSession();
             session.beginTransaction();
-            User user = new User();
-            user.setId(id);
+//            User user = new User();
+//            user.setId(id);
             session.delete(user);
             session.getTransaction().commit();
         } catch (Exception e) {

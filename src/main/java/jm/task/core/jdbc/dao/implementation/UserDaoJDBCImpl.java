@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.dao.implementation;
 
-import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.DAOFactory;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJDBCImpl implements UserDao {
+public class UserDaoJDBCImpl extends DAOFactory {
     private Connection connection;
     private Statement statement;
 
@@ -47,19 +47,19 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    public void saveUser(String name, String lastName, byte age) {
+    public void saveUser(User user) {
         try {
-            statement.execute("INSERT INTO users(name, lastName, age) VALUES ('" + name + "', '" + lastName + "', '" + age + "')");
-            System.out.println("User с именем - " + name + " добавлен в базу данных");
+            statement.execute("INSERT INTO users(name, lastName, age) VALUES ('" + user.getName() + "', '" + user.getLastName() + "', '" + user.getAge() + "')");
+            System.out.println("User с именем - " + user.getName() + " добавлен в базу данных");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
     }
 
-    public void removeUserById(long id) {
+    public void removeUserById(User user) {
         try {
-            statement.execute("DELETE FROM users WHERE ID='" + id + "'");
+            statement.execute("DELETE FROM users WHERE ID='" + user.getId() + "'");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
