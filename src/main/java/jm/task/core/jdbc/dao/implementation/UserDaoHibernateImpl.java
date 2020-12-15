@@ -63,8 +63,6 @@ public class UserDaoHibernateImpl extends DAOFactory {
         try {
             session = Util.getSessionFactory().openSession();
             session.beginTransaction();
-//            User user = new User();
-//            user.setId(id);
             session.delete(user);
             session.getTransaction().commit();
         } catch (Exception e) {
