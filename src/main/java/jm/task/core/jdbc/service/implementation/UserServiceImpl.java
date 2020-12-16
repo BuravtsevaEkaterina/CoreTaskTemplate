@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.service.implementation;
 
-import jm.task.core.jdbc.dao.DAOFactory;
+import jm.task.core.jdbc.util.DAOFactory;
 import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
@@ -11,18 +11,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class UserServiceImpl implements UserService {
-    private static final UserDao userDao;
-    static {
-        Properties property = new Properties();
-        String system = null;
-        try (FileInputStream fis = new FileInputStream("src/main/resources/config.properties")) {
-            property.load(fis);
-            system = property.getProperty("system");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        userDao = DAOFactory.getDAOFactory(system);
-    }
+    private static final UserDao userDao = DAOFactory.getDAOFactory();
 
     public void createUsersTable() {
         userDao.createUsersTable();

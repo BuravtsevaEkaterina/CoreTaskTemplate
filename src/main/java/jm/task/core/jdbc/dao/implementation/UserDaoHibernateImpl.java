@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.dao.implementation;
 
-import jm.task.core.jdbc.dao.DAOFactory;
+import jm.task.core.jdbc.util.DAOFactory;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
@@ -63,8 +63,6 @@ public class UserDaoHibernateImpl extends DAOFactory {
         try {
             session = Util.getSessionFactory().openSession();
             session.beginTransaction();
-//            User user = new User();
-//            user.setId(id);
             session.delete(user);
             session.getTransaction().commit();
         } catch (Exception e) {

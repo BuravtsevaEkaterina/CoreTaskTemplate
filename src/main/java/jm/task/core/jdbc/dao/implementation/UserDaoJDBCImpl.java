@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.dao.implementation;
 
-import jm.task.core.jdbc.dao.DAOFactory;
+import jm.task.core.jdbc.util.DAOFactory;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
